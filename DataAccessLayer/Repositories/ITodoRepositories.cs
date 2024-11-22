@@ -1,18 +1,14 @@
 ﻿using DataAccessLayer.Enitites;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DataAccessLayer.Repositories
+namespace DataAccessLayer.Repositories;
+
+public interface ITodoRepositories
 {
-    public interface ITodoRepositories
-    {
-        public Task<TodoItem> AddTodo(TodoItem item);
-        public Task<bool> FinishTodo(int id);
-        public Task<bool> DeleteTodo(int id);
-        public Task<bool> DeleteTodoFinished();
-        public Task<IEnumerable<TodoItem>> GetAllTodo();
-    }
+    public Task<TodoItem> AddTaskAsync(TodoItem item);
+    public Task<bool> FinishTasksAsync(int[] ids);
+    public Task<bool> FinishTaskAsync(int id);
+    public Task<bool> DeleteTasksAsync(int[] ids);
+    public Task<bool> DeleteTaskAsync(int id);
+    public Task<List<TodoItem>> GetAllTasksAsync();
+    public Task<List<TodoItem>> SearchTasksAsync(string query);
 }
