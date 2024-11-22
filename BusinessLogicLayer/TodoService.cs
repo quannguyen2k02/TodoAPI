@@ -5,48 +5,60 @@ namespace BusinessLogicLayer;
 
 public class TodoService : ITodoService
 {
-    private readonly ITodoRepositories _todoRepo;
+    private readonly ITodoRepository _todoRepository;
 
-    public TodoService(ITodoRepositories todoRepo) {
-        _todoRepo = todoRepo;
+    public TodoService(ITodoRepository todoRepo) {
+        _todoRepository = todoRepo;
     }
     public async Task<TodoItem> AddTaskAsync(TodoItem item)
     {
-        return await _todoRepo.AddTaskAsync(item);
+        return await _todoRepository.AddTaskAsync(item);
     }
 
     public async Task<bool> DeleteTasksAsync(int[] ids)
     {
-        return await _todoRepo.DeleteTasksAsync(ids);
+        return await _todoRepository.DeleteTasksAsync(ids);
     }
 
     public async Task<bool> DeleteTaskAsync(int id)
     {
-        bool result = await _todoRepo.DeleteTaskAsync(id);
-        return result;
+        return await _todoRepository.DeleteTaskAsync(id);
     }
 
 
     public async Task<List<TodoItem>> GetAllTaskAsync()
     {
-        var list =await _todoRepo.GetAllTasksAsync();
-        return list;
+        return await _todoRepository.GetAllTasksAsync();
     }
 
     public async Task<bool> FinishTasksAsync(int[] ids)
     {
-        var result = await _todoRepo.FinishTasksAsync(ids);
-        return result;
+        return await _todoRepository.FinishTasksAsync(ids);
+
     }
     public async Task<bool> FinishTaskAsync(int id)
     {
-        var result = await _todoRepo.FinishTaskAsync(id);
-        return result;
+        return await _todoRepository.FinishTaskAsync(id);
     }
 
     public async Task<List<TodoItem>> SearchTasksAsync(string query)
     {
-        var list = await _todoRepo.SearchTasksAsync(query);
-        return list;
+        return await _todoRepository.SearchTasksAsync(query);
+    }
+
+    public async Task<bool> ChangeTaskFinishAsync(int id)
+    {
+        return  await _todoRepository.ChangeStatusFinishAsync(id);
+     
+    }
+
+    public async Task<List<TodoItem>> GetFinishedTasksAsync()
+    {
+        return await _todoRepository.GetFinishedTasksAsync();
+    }
+
+    public async Task<List<TodoItem>> GetDoingTasksAsync()
+    {
+        return await _todoRepository.GetDoingTasksAsync();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace DataAccessLayer.Repositories;
 
-public interface ITodoRepositories
+public interface ITodoRepository
 {
     public Task<TodoItem> AddTaskAsync(TodoItem item);
     public Task<bool> FinishTasksAsync(int[] ids);
@@ -11,4 +11,7 @@ public interface ITodoRepositories
     public Task<bool> DeleteTaskAsync(int id);
     public Task<List<TodoItem>> GetAllTasksAsync();
     public Task<List<TodoItem>> SearchTasksAsync(string query);
+    public Task<bool> ChangeStatusFinishAsync(int id);
+    public Task<List<TodoItem>> GetFinishedTasksAsync();
+    public Task<List<TodoItem>> GetDoingTasksAsync();
 }

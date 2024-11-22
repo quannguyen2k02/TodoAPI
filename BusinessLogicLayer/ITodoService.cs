@@ -12,4 +12,7 @@ public interface ITodoService
     public Task<bool> DeleteTaskAsync(int id);
     public Task<List<TodoItem>> GetAllTaskAsync();
     public Task<List<TodoItem>> SearchTasksAsync(string query);
+    public Task<bool> ChangeTaskFinishAsync(int id);
+    public Task<List<TodoItem>> GetFinishedTasksAsync();
+    public Task<List<TodoItem>> GetDoingTasksAsync();
 }

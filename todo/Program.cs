@@ -19,7 +19,7 @@ builder.Services.AddCors(options =>
                       });
 });
 builder.Services.AddControllers();
-builder.Services.AddScoped<ITodoRepositories, TodoRepository>();
+builder.Services.AddScoped<ITodoRepository, TodoRepository>();
 builder.Services.AddScoped<ITodoService, TodoService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

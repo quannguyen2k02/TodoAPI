@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Repositories;
 
-    public class TodoRepository:ITodoRepositories
+    public class TodoRepository:ITodoRepository
     {
         private readonly ApplicationDbContext _context;
         
@@ -35,8 +35,7 @@ namespace DataAccessLayer.Repositories;
 
         public async Task<List<TodoItem>> GetAllTasksAsync()
         {
-            var list = await _context.TodoItems.Where(x=>x.IsDeleted == false).ToListAsync();
-            return list;
+            return await _context.TodoItems.Where(x=>x.IsDeleted == false).ToListAsync();
         }
 
         public async Task<bool> FinishTasksAsync(int[] ids)
@@ -94,17 +93,32 @@ namespace DataAccessLayer.Repositories;
             {
                 return lists;
             }
-            return await _context.TodoItems.Where(x=>!x.IsDeleted.HasValue).ToListAsync();
+            return await _context.TodoItems.Where(x=>x.IsDeleted == false).ToListAsync();
         }
-        public async Task<List<TodoItem>> SearchTasksAsync1(string query)
-        {
-            var list = new List<TodoItem>();
-            var normalizedQuery = query.ToLower(); // Chuẩn hóa từ khóa tìm kiếm
+        
 
-            list = await _context.TodoItems
-                .Where(t => t.IsDeleted == false && t.Title.ToLower().Contains(normalizedQuery))
-                .ToListAsync();
-            return list;
+    public async Task<bool> ChangeStatusFinishAsync(int id)
+    {
+        var changeTask =await _context.TodoItems.FindAsync(id);
+        if(changeTask != null)
+        {
+            changeTask.IsFinished = !changeTask.IsFinished;
+            await _context.SaveChangesAsync();
+            return true;
         }
+        return false;
+
     }
+
+    public async Task<List<TodoItem>> GetFinishedTasksAsync()
+    {
+        return await _context.TodoItems.Where(x => x.IsFinished == true && x.IsDeleted == false).ToListAsync();
+
+    }
+
+    public async Task<List<TodoItem>> GetDoingTasksAsync()
+    {
+        return await _context.TodoItems.Where(x => x.IsFinished == false && x.IsDeleted == false).ToListAsync();
+    }
+}
 
