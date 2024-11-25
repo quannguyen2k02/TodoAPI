@@ -41,9 +41,9 @@ public class TodoService : ITodoService
         return await _todoRepository.FinishTaskAsync(id);
     }
 
-    public async Task<List<TodoItem>> SearchTasksAsync(string query)
+    public async Task<List<TodoItem>> SearchTasksAsync(string query, string? status)
     {
-        return await _todoRepository.SearchTasksAsync(query);
+        return await _todoRepository.SearchTasksAsync(query,status);
     }
 
     public async Task<bool> ChangeTaskFinishAsync(int id)
@@ -60,5 +60,12 @@ public class TodoService : ITodoService
     public async Task<List<TodoItem>> GetDoingTasksAsync()
     {
         return await _todoRepository.GetDoingTasksAsync();
+    }
+
+    public async Task<bool> UpdateTaskAsync(TodoItem todoItem)
+    {
+        if (string.IsNullOrEmpty(todoItem.Title)) return false;
+        var result = await _todoRepository.UpdateTaskAsync(todoItem);
+        return result;
     }
 }

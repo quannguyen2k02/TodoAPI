@@ -10,8 +10,9 @@ public interface ITodoRepository
     public Task<bool> DeleteTasksAsync(int[] ids);
     public Task<bool> DeleteTaskAsync(int id);
     public Task<List<TodoItem>> GetAllTasksAsync();
-    public Task<List<TodoItem>> SearchTasksAsync(string query);
+    public Task<List<TodoItem>> SearchTasksAsync(string ?query, string ?status);
     public Task<bool> ChangeStatusFinishAsync(int id);
     public Task<List<TodoItem>> GetFinishedTasksAsync();
     public Task<List<TodoItem>> GetDoingTasksAsync();
+    public Task<bool> UpdateTaskAsync(TodoItem item);
 }

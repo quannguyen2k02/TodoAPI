@@ -9,9 +9,9 @@ namespace DataAccessLayer.Enitites
         [Required(ErrorMessage ="Title bắt buộc")]
         public string Title { get; set; }
 
-        public bool? IsFinished { set; get; } = false;
+        public bool IsFinished { set; get; } = false;
 
-        public bool? IsDeleted { set; get; } = false;
+        public bool IsDeleted { set; get; } = false;
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 

@@ -33,14 +33,7 @@ public class TaskController : ControllerBase
         return Ok(listTask);    
     }
 
-    [HttpPut]
-    public async Task<IActionResult> FinishTasks(int[] ids)
-    {
-        var result = await _service.FinishTasksAsync(ids);
-        if (result)
-            return Ok(ids);
-        return BadRequest();
-    }
+
 
     [HttpPut("{id}")]
     public async Task<IActionResult> ChangeStatusFinish(int id)
@@ -71,11 +64,11 @@ public class TaskController : ControllerBase
         return BadRequest();
     }
 
-    [HttpGet("{query}")]
-    public async Task<IActionResult> SearchTasks(string query)
+    [HttpGet("Search")]
+    public async Task<IActionResult> SearchTasks([FromQuery]string ?query,[FromQuery] string ?status = null)
     {
         string querySandardization = NormalizeSpaces(query);
-        var result = await _service.SearchTasksAsync(querySandardization);
+        var result = await _service.SearchTasksAsync(querySandardization, status);
         return Ok(result);
     }
 
@@ -91,6 +84,17 @@ public class TaskController : ControllerBase
     {
         var finishedTasks = await _service.GetFinishedTasksAsync();
         return Ok(finishedTasks);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateTask(TodoItem item)
+    {
+        if (ModelState.IsValid)
+        {
+            var result = await _service.UpdateTaskAsync(item);
+            return Ok(result);
+        }
+        return BadRequest();
     }
 
     public static string NormalizeSpaces(string input)
